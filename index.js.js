@@ -2,14 +2,6 @@ var express = require('express');
 var app = express();
 var nodemailer = require('nodemailer');
 
-// const SMTPServer = require("smtp-server").SMTPServer;
-// const server = new SMTPServer({
-//     secure: true,
-//     onAuth: true,
-// });
-// server.listen(587);
-
-
 console.log('ligado');
 app.use(express.json());
 
@@ -20,11 +12,8 @@ app.post('/mail', (req, res) => {
     const hostport = host.Port;
     const hostuser = host.User;
     const  hostpass = host.Pass;
- 
-    console.log(hostname);
-    console.log(hostport);
-    console.log(hostuser);
-    console.log(hostpass);
+    
+    console.log("asasdadsad");
 
     if(typeof mensagem == "undefined"){
         console.log("Falta mensagem")
