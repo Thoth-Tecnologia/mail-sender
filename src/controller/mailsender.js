@@ -1,4 +1,5 @@
 var nodemailer = require('nodemailer');
+var corpodoemail = 'lala';
 
 module.exports =  { async sendmail (req, res) {
     
@@ -7,16 +8,18 @@ module.exports =  { async sendmail (req, res) {
     const hostport = host.Port;
     const hostuser = host.User;
     const  hostpass = host.Pass;
-    const corpodoemail = null;
-
+  
      if(!empresa){
         corpodoemail = "<p>De:  " + nome  +  ", " + email + " </p>" +
          "<br>Mensagem: " + mensagem + "</br>";
      }else{
         corpodoemail = "<p>De:  " + nome  +  ", " + email + " </p>" +
-         "<br> Empresa" +  empresa + "</br>" +
+         "<br> Empresa: " +  empresa + "</br>" +
          "<p>" +  mensagem + "</p>"
      }
+
+
+
 
      if(typeof mensagem == "undefined"){
          console.log("Falta mensagem")
