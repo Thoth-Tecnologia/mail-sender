@@ -48,8 +48,8 @@ module.exports =  { async sendmail (req, res) {
          secure: false, // use SSL
          
          auth:{
-             user: hostuser, //Your email goes  here
-             pass: hostpass , // Your password  goes  here
+             user: hostuser, 
+             pass: hostpass , 
              
          },
          tls:{
