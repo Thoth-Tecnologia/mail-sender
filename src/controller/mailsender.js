@@ -3,11 +3,21 @@ var nodemailer = require('nodemailer');
 module.exports =  { async sendmail (req, res) {
     
     const { mensagem_body:mensagem, empresa_body:empresa, email_body:email, nome_body:nome, host_body:host } = req.body;
-     const hostname = host.Name;
-     const hostport = host.Port;
-     const hostuser = host.User;
-     const  hostpass = host.Pass;
- 
+    const hostname = host.Name;
+    const hostport = host.Port;
+    const hostuser = host.User;
+    const  hostpass = host.Pass;
+    const corpodoemail = null;
+
+     if(!empresa){
+        corpodoemail = "<p>De:  " + nome  +  ", " + email + " </p>" +
+         "<br>Mensagem: " + mensagem + "</br>";
+     }else{
+        corpodoemail = "<p>De:  " + nome  +  ", " + email + " </p>" +
+         "<br> Empresa" +  empresa + "</br>" +
+         "<p>" +  mensagem + "</p>"
+     }
+
      if(typeof mensagem == "undefined"){
          console.log("Falta mensagem")
          res.status(400).send("Algo deu errado!");
@@ -17,11 +27,7 @@ module.exports =  { async sendmail (req, res) {
          console.log("Falta email")
          res.status(400).send("Algo deu errado!");
      }
- 
-     if(typeof empresa == "undefined"){
-         console.log("Falta empresa")
-         res.status(400).send("Algo deu errado!");
-     }
+
  
      if(typeof nome == "undefined"){
          console.log("Falta nome")
@@ -32,11 +38,7 @@ module.exports =  { async sendmail (req, res) {
          from: `<${hostuser}>`,
          to: `<${hostuser}>`,
          subject:  'Mensagem recebida',
-         html:   
-                 
-                 "<p>De:  " + nome  +  ", " + email + " </p>" +
-                 "<br>Mensagem: " + mensagem + "</br>"
-                
+         html:   corpodoemail
      }
  
  
