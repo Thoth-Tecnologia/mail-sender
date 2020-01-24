@@ -23,18 +23,18 @@ module.exports =  { async sendmail (req, res) {
 
      if(typeof mensagem == "undefined"){
          console.log("Falta mensagem")
-         res.status(400).send("Algo deu errado!");
+         res.status(400).send("Algo deu errado! Faltam informações na requisição");
      }
  
      if(typeof email == "undefined"){
          console.log("Falta email")
-         res.status(400).send("Algo deu errado!");
+         res.status(400).send("Algo deu errado! Faltam informações na requisição");
      }
 
  
      if(typeof nome == "undefined"){
          console.log("Falta nome")
-         res.status(400).send("Algo deu errado!");
+         res.status(400).send("Algo deu errado! Faltam informações na requisição");
      }
  
      var configuracoes = {
