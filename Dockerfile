@@ -1,12 +1,12 @@
-FROM node:alpine
+FROM node:8
 
-WORKDIR /usr/app
+WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN yarn
+RUN npm install
 
 COPY . . 
 
-EXPOSE 9000
+EXPOSE 8080
 
 ENTRYPOINT ["yarn", "start"]

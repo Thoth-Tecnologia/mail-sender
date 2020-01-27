@@ -4,4 +4,4 @@ const routes = require('./routes');
 
 app.use(express.json());
 app.use(routes);
-app.listen(9000);
+app.listen(8080);
