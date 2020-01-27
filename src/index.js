@@ -4,6 +4,4 @@ const routes = require('./routes');
 
 app.use(express.json());
 app.use(routes);
-app.listen(9999);
-
-console.log('ligado');
+app.listen(9000);
