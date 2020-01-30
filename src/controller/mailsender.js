@@ -3,7 +3,7 @@ var nodemailer = require('nodemailer');
 exports.sendmail = async(req, res) => {
 
     // Recebendo os dados da requisição
-    const { data, host_body: host } = req.body;
+    const { data, host_body: host } = req.body.params;
     const hostname = host.Name;
     const hostport = host.Port;
     const hostuser = host.User;
