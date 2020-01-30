@@ -1,74 +1,57 @@
 var nodemailer = require('nodemailer');
-var corpodoemail = 'lala';
 
-module.exports =  { async sendmail (req, res) {
-    
-    const { mensagem_body:mensagem, empresa_body:empresa, email_body:email, nome_body:nome, host_body:host } = req.body;
+exports.sendmail = async(req, res) => {
+
+    // Recebendo os dados da requisição
+    const { data, host_body: host } = req.body;
     const hostname = host.Name;
     const hostport = host.Port;
     const hostuser = host.User;
-    const  hostpass = host.Pass;
-  
-     if(!empresa){
-        corpodoemail = "<p>De:  " + nome  +  ", " + email + " </p>" +
-         "<br>Mensagem: " + mensagem + "</br>";
-     }else{
-        corpodoemail = "<p>De:  " + nome  +  ", " + email + " </p>" +
-         "<br> Empresa: " +  empresa + "</br>" +
-         "<p>" +  mensagem + "</p>"
-     }
+    const hostpass = host.Pass;
 
+    let mailBody;
 
+    // Condição de erro caso a requisição não seja compatível com a API
+    if (typeof data !== 'object' || data <= 1)
+        return res.status(400).json({
+            data: '[1] As informações da requisição são inválidas'
+        });
 
+    mailBody = '<h1>Mensagem pelo site!</h1>';
+    data.forEach((el) => {
+        if (typeof el.legend === 'undefined' || typeof el.desc === 'undefined')
+            return res.status(400).json({
+                data: '[2] As informações da requisição são inválidas'
+            });
 
-     if(typeof mensagem == "undefined"){
-         console.log("Falta mensagem")
-         res.status(400).send("Algo deu errado! Faltam informações na requisição");
-     }
- 
-     if(typeof email == "undefined"){
-         console.log("Falta email")
-         res.status(400).send("Algo deu errado! Faltam informações na requisição");
-     }
+        mailBody += `<p><b>${el.legend}</b>: ${el.desc}</p>`;
+    });
 
- 
-     if(typeof nome == "undefined"){
-         console.log("Falta nome")
-         res.status(400).send("Algo deu errado! Faltam informações na requisição");
-     }
- 
-     var configuracoes = {
-         from: `<${hostuser}>`,
-         to: `<${hostuser}>`,
-         subject:  'Mensagem recebida',
-         html:   corpodoemail
-     }
- 
- 
-     
-     var transportador = nodemailer.createTransport( {
-         direct: true,
-         host: hostname,
-         port: hostport,
-         secure: false, // use SSL
-         
-         auth:{
-             user: hostuser, 
-             pass: hostpass , 
-             
-         },
-         tls:{
-             rejectUnauthorized: false,
-             secureProtocol: "TLSv1_method"
-         }
-     });
- 
-     await transportador.sendMail(configuracoes, function(error, response){
-         if(error){
-            return  res.send(error);
-         }else{
-            return res.send("Email enviado!");
-         }
-     });
-     
- }}
+    let configuracoes = {
+        from: `<${hostuser}>`,
+        to: `<${hostuser}>`,
+        subject: 'Mensagem recebida',
+        html: mailBody
+    }
+
+    let transportador = nodemailer.createTransport({
+        direct: true,
+        host: hostname,
+        port: hostport,
+        secure: false, // use SSL
+
+        auth: {
+            user: hostuser,
+            pass: hostpass,
+        },
+        tls: {
+            rejectUnauthorized: false,
+            secureProtocol: "TLSv1_method"
+        }
+    });
+
+    await transportador.sendMail(configuracoes, function(error, response) {
+        return error ? res.send(error) : res.send('Email enviado com sucesso!');
+    });
+
+}

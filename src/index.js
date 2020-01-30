@@ -4,4 +4,8 @@ const routes = require('./routes');
 
 app.use(express.json());
 app.use(routes);
-app.listen(9999);
+
+const PORT = 9999
+app.listen(PORT, () => {
+    console.log(`ONLINE NA PORTA ${PORT}`)
+});
