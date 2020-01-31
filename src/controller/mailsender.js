@@ -2,8 +2,12 @@ var nodemailer = require('nodemailer');
 
 exports.sendmail = async(req, res) => {
 
+    // Definindo defaults
+    const defaultTitle = 'Nova mensagem vinda do site!'
+
     // Recebendo os dados da requisição
-    const { data, host_body: host } = req.body.params;
+    const { title, data, host_body: host } = req.body.params;
+
     const hostname = host.Name;
     const hostport = host.Port;
     const hostuser = host.User;
@@ -17,8 +21,8 @@ exports.sendmail = async(req, res) => {
             data: '[1] As informações da requisição são inválidas'
         });
 
-    mailBody = '<h1>Mensagem pelo site!</h1>';
-    data.forEach((el) => {
+    mailBody = typeof title !== 'undefined' ? '<h1>' + title + '</h1>' : `<h1>${defaultTitle}</h1>`;
+    data.forEach(el => {
         if (typeof el.legend === 'undefined' || typeof el.desc === 'undefined')
             return res.status(400).json({
                 data: '[2] As informações da requisição são inválidas'
@@ -30,7 +34,7 @@ exports.sendmail = async(req, res) => {
     let configuracoes = {
         from: `<${hostuser}>`,
         to: `<${hostuser}>`,
-        subject: 'Mensagem recebida',
+        subject: typeof title !== 'undefined' ? title : defaultTitle,
         html: mailBody
     }
 
