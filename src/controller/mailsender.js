@@ -10,6 +10,7 @@ exports.sendmail = async(req, res) => {
         title, 
         data, 
         host_body: host, 
+        to = '', 
         cc = ''
     } = req.body.params;
 
@@ -38,7 +39,7 @@ exports.sendmail = async(req, res) => {
 
     let configuracoes = {
         from: `<${hostuser}>`,
-        to: `<${hostuser}>`,
+        to: `<${!to.length ? hostuser : to}>`,
         subject: typeof title !== 'undefined' ? title : defaultTitle,
         html: mailBody, 
         cc
