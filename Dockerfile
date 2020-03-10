@@ -1,12 +1,14 @@
-FROM node:8
+FROM node:alpine
 
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 
-COPY package*.json ./
-RUN npm install
+ENV PATH /usr/app/node_modules/.bin:$PATH
 
-COPY . . 
+COPY ./package.json /usr/app/package.json
+RUN yarn
 
-EXPOSE 9999
+COPY . .
 
-ENTRYPOINT ["yarn", "start"]
+EXPOSE 11111
+
+CMD ["yarn", "run", "dev"]
