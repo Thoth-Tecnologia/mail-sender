@@ -6,7 +6,12 @@ exports.sendmail = async(req, res) => {
     const defaultTitle = 'Nova mensagem vinda do site!'
 
     // Recebendo os dados da requisição
-    const { title, data, host_body: host } = req.body.params;
+    const { 
+        title, 
+        data, 
+        host_body: host, 
+        cc = ''
+    } = req.body.params;
 
     const hostname = host.Name;
     const hostport = host.Port;
@@ -35,7 +40,8 @@ exports.sendmail = async(req, res) => {
         from: `<${hostuser}>`,
         to: `<${hostuser}>`,
         subject: typeof title !== 'undefined' ? title : defaultTitle,
-        html: mailBody
+        html: mailBody, 
+        cc
     }
 
     let transportador = nodemailer.createTransport({

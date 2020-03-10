@@ -5,6 +5,6 @@ services:
         build: .
         command: yarn dev
         ports: 
-            - "11111:11111"
+            - "9999:9999"
         volumes: 
             - .:/usr/app
