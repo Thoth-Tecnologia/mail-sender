@@ -1,4 +1,4 @@
-var nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 
 exports.sendmail = async(req, res) => {
 
@@ -16,7 +16,7 @@ exports.sendmail = async(req, res) => {
     let mailBody;
 
     // Condição de erro caso a requisição não seja compatível com a API
-    if (typeof data !== 'object' || data <= 1)
+    if (typeof data !== 'object')
         return res.status(400).json({
             data: '[1] As informações da requisição são inválidas'
         });
