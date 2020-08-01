@@ -5,7 +5,12 @@ exports.sendmail = async (req, res) => {
   const defaultTitle = "Nova mensagem vinda do site!";
 
   // Recebendo os dados da requisição
-  const { title, data, to = "", cc = "" } = req.body.params;
+  const { title = "", data = "", to = "", cc = "" } = req.body.params;
+
+  if (title === "" || data === "")
+    return res.status(503).json({
+      e: "Dados de requisição inválidos",
+    });
 
   const hostname = process.env.MAIL_HOST;
   const hostport = process.env.MAIL_PORT;
