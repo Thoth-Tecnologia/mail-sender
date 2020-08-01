@@ -4,10 +4,10 @@ WORKDIR /usr/app
 
 ENV PATH /usr/app/node_modules/.bin:$PATH
 
-COPY ./package.json /usr/app/package.json
+COPY ./../app/package.json /usr/app/package.json
 RUN yarn
 
-COPY . .
+COPY ./../app/ .
 
 EXPOSE 9999
 
