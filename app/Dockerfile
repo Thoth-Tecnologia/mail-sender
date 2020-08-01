@@ -4,7 +4,7 @@ WORKDIR /usr/app
 
 ENV PATH /usr/app/node_modules/.bin:$PATH
 
-COPY ./package.json /usr/app/package.json
+COPY . /usr/app/package.json
 RUN yarn
 
 COPY . .
